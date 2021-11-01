@@ -46,8 +46,7 @@ class EmployeeHomeController extends BaseController
         $data = ServiceCommission::find()
             ->alias('sc')
             ->select(new Expression('sc.*,c.company_name,e.employee,t.name team_name,r.ranking,IFNULL(gi.amount,0) gi_amount,IFNULL(ti.amount,0) ti_amount,IFNULL(gi.amount,0) + IFNULL(ti.amount,0) as all_incentive,
-            sc.time_sheet_approved_allwance+e.allowance as all_allowance,e.basic_salary,sc.amount+sc.time_sheet_approved_allwance+
-            e.allowance+sc.commission+IFNULL(gi.amount,0)+IFNULL(ti.amount,0)+e.basic_salary total'))
+            sc.time_sheet_approved_allwance+e.allowance as all_allowance,e.basic_salary,sc.commission+IFNULL(gi.amount,0) + IFNULL(ti.amount,0)+sc.time_sheet_approved_allwance+e.allowance total'))
             ->leftJoin(Company::tableName() . ' as c','c.id = sc.company_id')
             ->leftJoin(Employee::tableName() . ' as e','e.id = sc.employee_id')
             ->leftJoin(Team::tableName() . ' as t','t.id = sc.team_id')
